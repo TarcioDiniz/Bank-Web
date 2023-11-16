@@ -1,13 +1,14 @@
-import React, {useState} from "react";
-import {Avatar, Box, IconButton, MenuItem, Typography, useTheme} from "@mui/material";
+import React from "react";
+import {Avatar, Box, MenuItem, Typography, useTheme} from "@mui/material";
 import {tokens} from "../../theme";
-import {HomeOutlined, MenuOutlined} from "@mui/icons-material";
+import {HomeOutlined} from "@mui/icons-material";
 import PixOutlinedIcon from '@mui/icons-material/PixOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import {Link} from "react-router-dom";
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
 import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
 import SignalCellularAltOutlinedIcon from '@mui/icons-material/SignalCellularAltOutlined';
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 interface ItemProps {
     title: string;
@@ -20,12 +21,27 @@ interface ItemProps {
 const Item: React.FC<ItemProps> = ({title, to, icon, selected, setSelected}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+
     return (
-        <MenuItem component={Link} to={to} style={{display: "flex", alignItems: "center"}}>
-            <Box sx={{display: "flex", alignItems: "center"}}>
+        <MenuItem
+            component={Link}
+            to={to}
+            style={{
+                display: "flex",
+                alignItems: "center",
+                padding: 13
+            }}
+            sx={[{'&:hover': {backgroundColor: `${colors.purple[100]}`}}]}
+            onClick={() => setSelected(title)}
+        >
+            <Box sx={{display: "flex", alignItems: "center"}} marginLeft={3}>
                 {icon}
-                <Typography style={{marginLeft: "5px", color: selected === title ? colors.red[400] : undefined}}
-                            onClick={() => setSelected(title)}>
+                <Typography
+                    style={{
+                        marginLeft: "5px",
+                        color: selected === title ? "black" : colors.white2[600],
+                        fontWeight: selected === title ? "bold" : undefined,
+                    }}>
                     {title}
                 </Typography>
             </Box>
@@ -33,105 +49,112 @@ const Item: React.FC<ItemProps> = ({title, to, icon, selected, setSelected}) => 
     );
 };
 
-const Sidebar: React.FC = () => {
+const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<string>> }> = ({ setSelectedItem }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [isCollapsed, setIsCollapsed] = useState(false);
-    const [selected, setSelected] = useState("Dashboard");
+    const [selected, setSelected] = React.useState("Dashboard");
 
     return (
         <Box
             sx={{
-                backgroundColor: colors.purple[400]
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                backgroundColor: colors.white1[100],
+                width: "280px",
+                height: '100vh'
             }}
         >
-            {/* Header */}
-            <MenuItem>
-                {!isCollapsed && (
-                    <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                        ml="15px"
-                    >
-                        <Typography variant="h3" color={colors.white1[100]}>
-                            Nubank
-                        </Typography>
-                        <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                            <MenuOutlined/>
-                        </IconButton>
-                    </Box>
-                )}
-            </MenuItem>
+            <div>
+                {/* User Info */}
+                <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    paddingLeft={5}
+                    paddingTop={3}
+                >
+                    <Typography variant="h4" color={colors.black[900]}>
+                        Plutus
+                    </Typography>
 
-            {/* User Info */}
-            {!isCollapsed && (
-                <Box sx={{display: "flex", alignItems: "center", paddingLeft: "5%", paddingTop:"5%"}}>
-                    <Avatar sx={{bgcolor: colors.purple[200], marginRight: "5px"}}>CT</Avatar>
-                    <Box>
-                        <Typography>
-                            Clara Torres
-                        </Typography>
-                        <Typography fontSize="9px">Agência 0001 • Conta 36332425-5</Typography>
-                        <Typography fontSize="9px">Banco 0260 • Quantum Pagamentos S.A -</Typography>
-                        <Typography fontSize="9px">Instituição de pagamentos</Typography>
-                        {/* Adicione quantas Typography quiser aqui */}
-                    </Box>
                 </Box>
-            )}
 
-            {/* Menu Items */}
-            <Box marginTop={5}>
-                {/* Existing Items */}
+                {/* Menu Items */}
+                <Box marginTop={5}>
+                    {/* Existing Items */}
+                    <Item
+                        title="Home"
+                        to="/"
+                        icon={<HomeOutlined style={{color: selected === 'Home' ? 'black' : colors.white2[600]}}/>}
+                        selected={selected}
+                        setSelected={(title) => {
+                            setSelected(title);
+                            setSelectedItem(title); // Adiciona essa linha para atualizar o item selecionado na Topbar
+                        }}
+                    />
+                    <Item
+                        title="Pix"
+                        to="/pix"
+                        icon={<PixOutlinedIcon style={{color: selected === 'Pix' ? 'black' : colors.white2[600]}}/>}
+                        selected={selected}
+                        setSelected={(title) => {
+                            setSelected(title);
+                            setSelectedItem(title); // Adiciona essa linha para atualizar o item selecionado na Topbar
+                        }}
+                    />
+                    <Item
+                        title="Transfer"
+                        to="/transfer"
+                        icon={<CurrencyExchangeOutlinedIcon
+                            style={{color: selected === 'Transfer' ? 'black' : colors.white2[600]}}/>}
+                        selected={selected}
+                        setSelected={(title) => {
+                            setSelected(title);
+                            setSelectedItem(title); // Adiciona essa linha para atualizar o item selecionado na Topbar
+                        }}
+                    />
+                    <Item
+                        title="Deposit"
+                        to="/deposit"
+                        icon={<PaymentsOutlinedIcon
+                            style={{color: selected === 'Deposit' ? 'black' : colors.white2[600]}}/>}
+                        selected={selected}
+                        setSelected={(title) => {
+                            setSelected(title);
+                            setSelectedItem(title); // Adiciona essa linha para atualizar o item selecionado na Topbar
+                        }}
+                    />
+                    <Item
+                        title="Investments"
+                        to="/investments"
+                        icon={<SignalCellularAltOutlinedIcon
+                            style={{color: selected === 'Investments' ? 'black' : colors.white2[600]}}/>}
+                        selected={selected}
+                        setSelected={(title) => {
+                            setSelected(title);
+                            setSelectedItem(title); // Adiciona essa linha para atualizar o item selecionado na Topbar
+                        }}
+                    />
+                    {/* ... (other items) */}
+                </Box>
+            </div>
+            <Box>
                 <Item
-                    title="Início"
-                    to="/"
-                    icon={<HomeOutlined/>}
+                    title="Settings"
+                    to="/Settings"
+                    icon={<SettingsOutlinedIcon
+                        style={{color: selected === 'Settings' ? 'black' : colors.white2[600]}}/>}
                     selected={selected}
-                    setSelected={setSelected}
+                    setSelected={(title) => {
+                        setSelected(title);
+                        setSelectedItem(title); // Adiciona essa linha para atualizar o item selecionado na Topbar
+                    }}
                 />
                 <Item
-                    title="Área Pix"
-                    to="/area-pix"
-                    icon={<PixOutlinedIcon/>}
-                    selected={selected}
-                    setSelected={setSelected}
-                />
-                <Item
-                    title="Transferência"
-                    to="/transferencia"
-                    icon={<CurrencyExchangeOutlinedIcon/>}
-                    selected={selected}
-                    setSelected={setSelected}
-                />
-                <Item
-                    title="Depositar"
-                    to="/depositar"
-                    icon={<PaymentsOutlinedIcon/>}
-                    selected={selected}
-                    setSelected={setSelected}
-                />
-                <Item
-                    title="Investimentos"
-                    to="/investimentos"
-                    icon={<SignalCellularAltOutlinedIcon/>}
-                    selected={selected}
-                    setSelected={setSelected}
-                />
-
-
-            </Box>
-            <Box sx={{
-                bottom: 0,
-                position: "fixed",
-                width: "100%",
-                textAlign: "center",
-                marginBottom: 2
-            }}>
-                <Item
-                    title="Sair"
-                    to="/sair"
-                    icon={<LogoutOutlinedIcon/>}
+                    title="Logout"
+                    to="/logout"
+                    icon={<LogoutOutlinedIcon style={{color: selected === 'Logout' ? 'black' : colors.white2[600]}}/>}
                     selected={selected}
                     setSelected={setSelected}
                 />
@@ -141,4 +164,3 @@ const Sidebar: React.FC = () => {
 };
 
 export default Sidebar;
-

@@ -46,7 +46,7 @@ export const tokens = (mode: "dark" | "light"): Colors => ({
                 900: "#070606",
             },
             white1: {
-                100: "#fbfbfb",
+                100: "#f7f8ff",
                 200: "#f7f7f7",
                 300: "#f3f3f3",
                 400: "#efefef",
@@ -62,7 +62,7 @@ export const tokens = (mode: "dark" | "light"): Colors => ({
                 300: "#ffffff",
                 400: "#ffffff",
                 500: "#ffffff",
-                600: "#f7f7f7",
+                600: "#8d8f8f",
                 700: "#999999",
                 800: "#666666",
                 900: "#333333",
@@ -80,7 +80,7 @@ export const themeSettings = (mode: "dark" | "light") => {
             ...(mode === "dark"
                 ? {
                     primary: {
-                        main: colors.white1[400],
+                        main: colors.white2[900],
                     },
                     secondary: {
                         main: colors.purple[400],
@@ -91,7 +91,7 @@ export const themeSettings = (mode: "dark" | "light") => {
                         light: colors.red[100],
                     },
                     background: {
-                        default: colors.white2[600],
+                        default: colors.white2[100],
                     },
                 }
                 : {}),
@@ -108,8 +108,8 @@ export const themeSettings = (mode: "dark" | "light") => {
                 fontSize: 32,
             },
             h3: {
-                fontFamily: ["Source Code Pro", "sans-serif"].join(","),
-                fontSize: 24,
+                fontFamily: ['Source Sans 3', "sans-serif"].join(","),
+                fontSize: 10,
             },
             h4: {
                 fontFamily: ["Source Code Pro", "sans-serif"].join(","),

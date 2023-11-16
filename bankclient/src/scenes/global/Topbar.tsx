@@ -1,29 +1,34 @@
-import React, {useContext} from "react";
-import {
-    IconButton,
-    InputBase,
-    useTheme,
-    Theme,
-} from "@mui/material";
-import {Box} from "@mui/material";
-import SearchIcon from "@mui/icons-material/SearchOutlined";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import React from "react";
+import {Avatar, Box, IconButton, Theme, Typography, useTheme} from "@mui/material";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 
 // Import ColorModeContext and tokens from your original code
-import {ColorModeContext, tokens} from "../../theme";
+import {tokens} from "../../theme";
+
+const stringAvatar = (name: string | undefined): { children: string } => {
+    if (!name) {
+        return {
+            children: 'NA', // Use any default text or icon for undefined names
+        };
+    }
+
+    const initials = name
+        .split(' ')
+        .map((word: string) => word.charAt(0).toUpperCase())
+        .join('');
+
+    return {
+        children: initials, // Use first letters of first and last names
+    };
+};
+
 
 interface TopbarProps {
     // Add any additional props if needed
 }
 
-const Topbar: React.FC<TopbarProps> = () => {
-    const theme = useTheme() as Theme; // Added 'as Theme' to inform TypeScript about the type
-    const colorMode = useContext(ColorModeContext);
-
+const Topbar: React.FC<{ selectedItem: string }> = ({ selectedItem }) => {
+    const theme = useTheme() as Theme;
     const colors = tokens(theme.palette.mode);
 
     return (
@@ -31,37 +36,44 @@ const Topbar: React.FC<TopbarProps> = () => {
             display="flex"
             justifyContent="space-between"
             p={2}
-            {...{ backgroundColor: colors.purple[400] as any }}
+            {...{backgroundColor: colors.white2[100] as any}}
         >
             {/* SEARCH BAR */}
-            <Box
-                // Add type assertion here
-                sx={{display: "flex", backgroundColor: colors.purple[300], borderRadius: "3px"}}
-            >
-                <InputBase sx={{ml: 2, flex: 1}} placeholder="Search"/>
-                <IconButton type="button" sx={{p: 1}}>
-                    <SearchIcon/>
-                </IconButton>
+            <Box marginLeft={4}>
+                <Typography
+                    style={{
+                        fontFamily: "'Source Sans 3', 'sans-serif'",
+                        fontWeight: "bold",
+                    }}
+                    fontSize={23}
+                    marginTop={1}
+                    color={colors.black[900]}
+                >
+                    {selectedItem}
+                </Typography>
             </Box>
 
             {/* ICONS */}
-            <Box display="flex">
-                <IconButton onClick={colorMode.toggleColorMode}>
-                    {theme.palette.mode === "dark" ? (
-                        <DarkModeOutlinedIcon/>
-                    ) : (
-                        <LightModeOutlinedIcon/>
-                    )}
-                </IconButton>
-                <IconButton>
-                    <NotificationsOutlinedIcon/>
-                </IconButton>
-                <IconButton>
-                    <SettingsOutlinedIcon/>
-                </IconButton>
-                <IconButton>
-                    <PersonOutlinedIcon/>
-                </IconButton>
+            <Box display="flex" alignItems="center">
+                <Box marginRight={1}>
+                    <IconButton>
+                        <NotificationsOutlinedIcon style={{color: "black"}}/>
+                    </IconButton>
+                </Box>
+                <Box display="flex" alignItems="center" marginRight={2}>
+                    <Avatar {...stringAvatar('Tarcio Diniz')} />
+                    <Typography
+                        style={{
+                            fontFamily: "'Source Sans 3', 'sans-serif'",
+                            fontWeight: "bold",
+                        }}
+                        fontSize={18}
+                        marginLeft={1}
+                        color={colors.black[900]}
+                    >
+                        Tarcio Diniz
+                    </Typography>
+                </Box>
             </Box>
         </Box>
     );

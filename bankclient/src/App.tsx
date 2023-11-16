@@ -4,17 +4,19 @@ import Topbar from "./scenes/global/Topbar";
 import {Route, Routes} from "react-router-dom";
 import {Dashboard} from "@mui/icons-material";
 import Sidebar from "./scenes/global/Sidebar";
+import {useState} from "react";
 
 function App() {
     const [theme, colorMode] = useMode();
+    const [selectedItem, setSelectedItem] = useState("Home");
     return (
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
                 <div className="app">
-                    <Sidebar/>
+                    <Sidebar setSelectedItem={setSelectedItem}/>
                     <main className="content">
-                        <Topbar/>
+                        <Topbar selectedItem={selectedItem}/>
                         <Routes>
                             <Route path="/" element={<Dashboard/>}/>
                         </Routes>
