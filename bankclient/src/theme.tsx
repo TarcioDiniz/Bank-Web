@@ -1,7 +1,8 @@
-import { createContext, useState, useMemo } from "react";
-import { createTheme, Theme } from "@mui/material/styles";
+import {createContext, useState, useMemo} from "react";
+import {createTheme, Theme} from "@mui/material/styles";
 
 interface Colors {
+    blue: Record<number, string>;
     red: Record<number, string>;
     purple: Record<number, string>;
     black: Record<number, string>;
@@ -23,6 +24,10 @@ export const tokens = (mode: "dark" | "light"): Colors => ({
                 800: "#520413",
                 900: "#290209",
             },
+            blue: {
+                100: "#ebf3f9",
+                200: "#1e1f25"
+            },
             purple: {
                 100: "#e0d6e6",
                 200: "#c1adcc",
@@ -35,6 +40,7 @@ export const tokens = (mode: "dark" | "light"): Colors => ({
                 900: "#140a1a",
             },
             black: {
+                99: "rgba(211,210,210,0.27)",
                 100: "#d3d2d2",
                 200: "#a7a5a6",
                 300: "#7b7979",
@@ -132,7 +138,8 @@ interface ColorModeContextType {
 }
 
 export const ColorModeContext = createContext<ColorModeContextType>({
-    toggleColorMode: () => {},
+    toggleColorMode: () => {
+    },
 });
 
 export const useMode = (): [Theme, ColorModeContextType] => {
