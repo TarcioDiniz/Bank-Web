@@ -15,7 +15,7 @@ export const tokens = (mode: "dark" | "light"): Colors => ({
         ? {
             red: {
                 100: "#f5ced5",
-                200: "#eb9dac",
+                200: "#fec0a7",
                 300: "#e06b82",
                 400: "#d63a59",
                 500: "#cc092f",
@@ -30,7 +30,7 @@ export const tokens = (mode: "dark" | "light"): Colors => ({
             },
             purple: {
                 100: "#e0d6e6",
-                200: "#c1adcc",
+                200: "#c7b4f3",
                 300: "#a184b3",
                 400: "#825b99",
                 500: "#633280",
@@ -52,6 +52,7 @@ export const tokens = (mode: "dark" | "light"): Colors => ({
                 900: "#070606",
             },
             white1: {
+                99: "#ebebeb",
                 100: "#f7f8ff",
                 200: "#f7f7f7",
                 300: "#f3f3f3",
@@ -61,6 +62,7 @@ export const tokens = (mode: "dark" | "light"): Colors => ({
                 700: "#8d8d8d",
                 800: "#5e5e5e",
                 900: "#2f2f2f",
+                901: "#1e1f24"
             },
             white2: {
                 100: "#ffffff",

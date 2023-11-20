@@ -1,5 +1,5 @@
 import {Grid, Typography, useTheme} from "@mui/material";
-import {tokens} from "../../theme";
+import {tokens} from "../../../theme";
 
 const BalanceCard = () => {
     const theme = useTheme();

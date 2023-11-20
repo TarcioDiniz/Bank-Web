@@ -4,28 +4,8 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 
 // Import ColorModeContext and tokens from your original code
 import {tokens} from "../../theme";
+import StringAvatar from "../../utilities/StringAvatar";
 
-const stringAvatar = (name: string | undefined): { children: string } => {
-    if (!name) {
-        return {
-            children: 'NA', // Use any default text or icon for undefined names
-        };
-    }
-
-    const initials = name
-        .split(' ')
-        .map((word: string) => word.charAt(0).toUpperCase())
-        .join('');
-
-    return {
-        children: initials, // Use first letters of first and last names
-    };
-};
-
-
-interface TopbarProps {
-    // Add any additional props if needed
-}
 
 const Topbar: React.FC<{ selectedItem: string }> = ({ selectedItem }) => {
     const theme = useTheme() as Theme;
@@ -61,7 +41,7 @@ const Topbar: React.FC<{ selectedItem: string }> = ({ selectedItem }) => {
                     </IconButton>
                 </Box>
                 <Box display="flex" alignItems="center" marginRight={2}>
-                    <Avatar {...stringAvatar('Tarcio Diniz')} />
+                    <Avatar {...StringAvatar('Tarcio Diniz')} />
                     <Typography
                         style={{
                             fontFamily: "'Source Sans 3', 'sans-serif'",
