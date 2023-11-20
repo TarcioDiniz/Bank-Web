@@ -7,6 +7,7 @@ import CreditCard from "../Card/CreditCard";
 import Invoice from "../Card/Invoice";
 import QuickTransfer from "../Card/QuickTransfer";
 import BinanceGraphic from "../graphics/BinanceGraphic";
+import InfomationAvatar from "../Card/InfomationAvatar";
 
 
 const Home = () => {
@@ -37,7 +38,7 @@ const Home = () => {
                         }} width={400} height={220} bgcolor={colors.purple[200]} borderRadius={2}>
                             <Typography variant="h6" color={colors.white2[900]}
                                         style={{marginLeft: 20, fontWeight: "bold"}}>
-                                USDT/BRL
+                                BTC/BRL
                             </Typography>
                             <Box sx={{width: "90%", height: "90%"}}>
                                 <BinanceGraphic/>
@@ -70,7 +71,7 @@ const Home = () => {
                                         marginTop: 3
                                     }} width={290} height={135} bgcolor={colors.blue[200]} borderRadius={3}>
                                         <Box sx={{width: "90%", height: "90%"}}>
-
+                                        <InfomationAvatar/>
                                         </Box>
                                     </Box>
                                 </Grid>
