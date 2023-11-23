@@ -5,6 +5,7 @@ import {Route, Routes} from "react-router-dom";
 import Sidebar from "./scenes/global/Sidebar";
 import {useState} from "react";
 import Home from "./scenes/home";
+import Pix from "./scenes/pix";
 
 function App() {
     const [theme, colorMode] = useMode();
@@ -19,6 +20,7 @@ function App() {
                         <Topbar selectedItem={selectedItem}/>
                         <Routes>
                             <Route path="/" element={<Home/>}/>
+                            <Route path="/pix" element={<Pix/>}/>
                         </Routes>
                     </main>
                 </div>

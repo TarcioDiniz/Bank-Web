@@ -26,7 +26,8 @@ export const tokens = (mode: "dark" | "light"): Colors => ({
             },
             blue: {
                 100: "#ebf3f9",
-                200: "#1e1f25"
+                200: "#1e1f25",
+                300: "#7992a1"
             },
             purple: {
                 100: "#e0d6e6",
@@ -88,10 +89,10 @@ export const themeSettings = (mode: "dark" | "light") => {
             ...(mode === "dark"
                 ? {
                     primary: {
-                        main: colors.white2[900],
+                        main: colors.blue[200],
                     },
                     secondary: {
-                        main: colors.purple[400],
+                        main: colors.black[400],
                     },
                     neutral: {
                         dark: colors.purple[700],
@@ -99,7 +100,7 @@ export const themeSettings = (mode: "dark" | "light") => {
                         light: colors.red[100],
                     },
                     background: {
-                        default: colors.white2[100],
+                        default: colors.white2[500],
                     },
                 }
                 : {}),

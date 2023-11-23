@@ -3,16 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import {AlertProvider} from "./scenes/Card/AlertContextProps";
 
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-      <BrowserRouter>
-    <App />
-      </BrowserRouter>
-  </React.StrictMode>
+    <React.StrictMode>
+        <AlertProvider>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </AlertProvider>
+    </React.StrictMode>
 );
 

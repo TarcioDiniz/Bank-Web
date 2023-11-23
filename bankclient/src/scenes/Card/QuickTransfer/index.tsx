@@ -9,9 +9,10 @@ import {
     DialogContent,
     TextField,
     DialogContentText,
-    DialogActions,
+    DialogActions, useTheme,
 } from "@mui/material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import {tokens} from "../../../theme";
 
 const avatarsPerPage = 4;
 
@@ -25,6 +26,9 @@ const QuickTransfer = () => {
     const [isAddAvatarDialogOpen, setAddAvatarDialogOpen] = useState(false);
     const [newAvatarName, setNewAvatarName] = useState("");
     const [newPixKey, setNewPixKey] = useState("");
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const [contacts, setContacts] = useState([
         { name: "Kent Dodds", pixKey: "kent@example.com" },
         // ... outros contatos ...
@@ -82,8 +86,8 @@ const QuickTransfer = () => {
                     }}
                 >
                     <Box marginRight={2} marginTop={-1.5}>
-                        <Avatar sx={{ width: 80, height: 80, background: "white" }}>
-                            <AddOutlinedIcon style={{ color: "black" }} sx={{ width: 40, height: 40 }} />
+                        <Avatar sx={{ width: 70, height: 70, background: "white" }}>
+                            <AddOutlinedIcon style={{ color: "black" }} sx={{ width: 35, height: 35 }} />
                         </Avatar>
                         <Typography color="white" sx={{ textAlign: "center", marginTop: 1 }}>
                             Add New
@@ -119,9 +123,9 @@ const QuickTransfer = () => {
             {renderAvatars()}
             <Box>
                 <Button onClick={handlePreviousPage} disabled={currentPage === 0}>
-                    Página Anterior
+                    Previous
                 </Button>
-                <Button onClick={handleNextPage}>Próxima Página</Button>
+                <Button sx={{color: "#f3df00"}} onClick={handleNextPage}>Next</Button>
             </Box>
             <React.Fragment>
                 <Dialog open={isAddAvatarDialogOpen} onClose={handleCloseAddAvatarDialog}>

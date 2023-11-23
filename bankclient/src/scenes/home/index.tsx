@@ -1,12 +1,12 @@
 import React from "react";
-import {Box, Grid, Typography, useTheme} from "@mui/material";
+import {Box, Card, Grid, Typography, useTheme} from "@mui/material";
 import {tokens} from "../../theme";
 import Transactions from "../transactions";
 import BalanceCard from "../Card/BalanceCard";
 import CreditCard from "../Card/CreditCard";
 import Invoice from "../Card/Invoice";
 import QuickTransfer from "../Card/QuickTransfer";
-import BinanceGraphic from "../graphics/BinanceGraphic";
+import BinanceGraphic from "../Card/BinanceGraphic";
 import InfomationAvatar from "../Card/InfomationAvatar";
 
 
@@ -107,12 +107,16 @@ const Home = () => {
                         <Transactions/>
                     </div>
                 </Box>
-                <Grid marginTop={4}>
-                    <Box sx={{
+                <Grid>
+                    <Card sx={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                    }} width={600} height={207} bgcolor={colors.white1[901]} borderRadius={2}>
+                        width:"610px",
+                        height:"240px",
+                        backgroundColor:colors.white1[901],
+                        borderRadius: 2
+                    }} >
                         <Box sx={{width: "90%", height: "90%"}}>
                             {/* Typography fixed at the top */}
                             <Typography variant="h6" color={colors.white2[100]}
@@ -121,7 +125,7 @@ const Home = () => {
                             </Typography>
                             <QuickTransfer/>
                         </Box>
-                    </Box>
+                    </Card>
                 </Grid>
             </Grid>
         </Grid>

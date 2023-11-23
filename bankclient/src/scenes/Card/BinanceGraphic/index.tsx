@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { Box } from "@mui/material";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {Box} from "@mui/material";
 import Chart from "react-apexcharts";
 import useWebSocket from "react-use-websocket";
-import { ApexOptions } from "apexcharts";
+import {ApexOptions} from "apexcharts";
 
 interface KlineMessage {
     // ...
@@ -108,7 +108,7 @@ const BinanceGraphic = () => {
 
     return (
         <Box>
-            <Chart options={options} series={[{ data: limitedData }]} type="candlestick" height={170} />
+            <Chart options={options} series={[{data: limitedData}]} type="candlestick" height={170}/>
         </Box>
     );
 };

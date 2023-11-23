@@ -70,7 +70,7 @@ const Invoice = () => {
                     variant="contained"
                     color="primary"
                     onClick={handlePayInvoice}
-                    style={{ width: '100%' }} // Setting the width as 100%
+                    style={{ width: '100%' ,background: colors.black[700]}} // Setting the width as 100%
                 >
                     Pay Invoice
                 </Button>
