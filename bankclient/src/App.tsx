@@ -6,6 +6,7 @@ import Sidebar from "./scenes/global/Sidebar";
 import {useState} from "react";
 import Home from "./scenes/home";
 import Pix from "./scenes/pix";
+import Deposit from "./scenes/deposit";
 
 function App() {
     const [theme, colorMode] = useMode();
@@ -21,6 +22,7 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Home/>}/>
                             <Route path="/pix" element={<Pix/>}/>
+                            <Route path="/deposit" element={<Deposit/>}/>
                         </Routes>
                     </main>
                 </div>

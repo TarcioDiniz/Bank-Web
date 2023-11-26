@@ -49,7 +49,7 @@ const Item: React.FC<ItemProps> = ({title, to, icon, selected, setSelected}) => 
     );
 };
 
-const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<string>> }> = ({ setSelectedItem }) => {
+const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<string>> }> = ({setSelectedItem}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [selected, setSelected] = React.useState("Dashboard");
@@ -103,7 +103,7 @@ const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<s
                             setSelectedItem(title); // Adiciona essa linha para atualizar o item selecionado na Topbar
                         }}
                     />
-                    <Item
+                    {/*<Item
                         title="Transfer"
                         to="/transfer"
                         icon={<CurrencyExchangeOutlinedIcon
@@ -113,7 +113,7 @@ const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<s
                             setSelected(title);
                             setSelectedItem(title); // Adiciona essa linha para atualizar o item selecionado na Topbar
                         }}
-                    />
+                    />*/}
                     <Item
                         title="Deposit"
                         to="/deposit"
@@ -125,7 +125,7 @@ const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<s
                             setSelectedItem(title); // Adiciona essa linha para atualizar o item selecionado na Topbar
                         }}
                     />
-                    <Item
+                    {/*<Item
                         title="Investments"
                         to="/investments"
                         icon={<SignalCellularAltOutlinedIcon
@@ -135,7 +135,7 @@ const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<s
                             setSelected(title);
                             setSelectedItem(title); // Adiciona essa linha para atualizar o item selecionado na Topbar
                         }}
-                    />
+                    />*/}
                     {/* ... (other items) */}
                 </Box>
             </div>

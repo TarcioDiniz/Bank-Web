@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import {InputAdornment, TextField} from '@mui/material';
+// MoneyInput.tsx
+import React from 'react';
+import { InputAdornment, TextField } from '@mui/material';
 
-const MoneyInput: React.FC = () => {
-    const [amount, setAmount] = useState<string>('');
+interface MoneyInputProps {
+    value: string;
+    onChange: (value: string) => void;
+}
 
+const MoneyInput: React.FC<MoneyInputProps> = ({ value, onChange }) => {
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let inputValue = event.target.value;
-
-        // Remove tudo que não é dígito
         inputValue = inputValue.replace(/\D/g, '');
-
-        // Remove os zeros à esquerda
         inputValue = inputValue.replace(/^0+/, '');
 
-        // Adiciona a máscara
         if (inputValue.length > 2) {
             inputValue = `${inputValue.slice(0, -2)}.${inputValue.slice(-2)}`;
         } else if (inputValue.length > 0) {
@@ -22,7 +21,7 @@ const MoneyInput: React.FC = () => {
             inputValue = '';
         }
 
-        setAmount(inputValue);
+        onChange(inputValue);
     };
 
     return (
@@ -31,11 +30,11 @@ const MoneyInput: React.FC = () => {
             variant="outlined"
             fullWidth
             margin="normal"
-            value={amount}
+            value={value}
             onChange={handleAmountChange}
             InputProps={{
-                startAdornment:  <InputAdornment position="start">
-                    R$&nbsp;{/* &nbsp; é um espaço não quebrável */}
+                startAdornment: <InputAdornment position="start">
+                    R$&nbsp;
                 </InputAdornment>,
             }}
         />

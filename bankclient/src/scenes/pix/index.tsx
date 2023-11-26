@@ -11,6 +11,7 @@ const Pix: React.FC = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [pixKey, setPixKey] = useState('');
+    const [transferAmount, setTransferAmount] = useState<string>('');
 
 
     const handleFormatChange = (
@@ -46,6 +47,9 @@ const Pix: React.FC = () => {
         setPixKey(data);
     };
 
+    const handleMoneyInputChange = (value: string) => {
+        setTransferAmount(value);
+    };
     return (
         <Grid container spacing={2}>
             {/* Lado Esquerdo: Chaves Pix */}
@@ -91,9 +95,8 @@ const Pix: React.FC = () => {
                         <Typography marginBottom={2} color={colors.black[700]} fontWeight="bold" variant="h4">Transfer</Typography>
                         <TextField label="Description" variant="outlined" fullWidth margin="normal"/>
                         <DateInput/>
-                        <MoneyInput/>
+                        <MoneyInput value={transferAmount} onChange={handleMoneyInputChange} />
                         <TextField
-                            autoFocus
                             margin="dense"
                             label="Pix key"
                             fullWidth
