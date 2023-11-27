@@ -7,6 +7,7 @@ import {useState} from "react";
 import Home from "./scenes/home";
 import Pix from "./scenes/pix";
 import Deposit from "./scenes/deposit";
+import Settings from "./scenes/settings";
 
 function App() {
     const [theme, colorMode] = useMode();
@@ -23,6 +24,7 @@ function App() {
                             <Route path="/" element={<Home/>}/>
                             <Route path="/pix" element={<Pix/>}/>
                             <Route path="/deposit" element={<Deposit/>}/>
+                            <Route path="/Settings" element={<Settings/>}/>
                         </Routes>
                     </main>
                 </div>
