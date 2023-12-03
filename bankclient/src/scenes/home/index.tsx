@@ -26,7 +26,7 @@ const Home = () => {
                             marginLeft: 5
                         }} width={400} height={220} bgcolor={colors.blue[100]} borderRadius={2}>
                             <Box sx={{width: "90%", height: "90%"}}>
-                                <BalanceCard/>
+                                <BalanceCard />;
                             </Box>
                         </Box>
                     </Grid>

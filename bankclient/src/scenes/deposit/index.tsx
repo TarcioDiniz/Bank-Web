@@ -1,16 +1,20 @@
 // Deposit.tsx
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
+    Box,
+    Button,
     Card,
     CardContent,
-    TextField,
-    Button,
+    FormControl,
+    Grid,
+    InputLabel,
     MenuItem,
     Select,
-    InputLabel,
-    FormControl, Grid, Typography, useTheme, Box,
+    TextField,
+    Typography,
+    useTheme,
 } from '@mui/material';
-import { useAlert } from '../Card/AlertContextProps';
+import {useAlert} from '../Card/AlertContextProps';
 import MoneyInput from '../Card/MoneyInput';
 import {tokens} from "../../theme";
 import DateInput from "../Card/DateInput";
@@ -78,7 +82,7 @@ const Deposit: React.FC = () => {
             <Box width="98%">
                 <Card sx={{marginBottom: 2, backgroundColor: "#c2e5c5"}}>
                     <CardContent>
-                        <BalanceCard/>
+                        <BalanceCard />;
                     </CardContent>
                 </Card>
                 <Card sx={{height: 500, backgroundColor: colors.blue[300]}}>

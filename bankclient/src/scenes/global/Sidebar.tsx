@@ -9,6 +9,7 @@ import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
 import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
 import SignalCellularAltOutlinedIcon from '@mui/icons-material/SignalCellularAltOutlined';
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import {clearAuthenticatedAccount} from "../../data/globals";
 
 interface ItemProps {
     title: string;
@@ -53,6 +54,16 @@ const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<s
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [selected, setSelected] = React.useState("Dashboard");
+    const [loggedOut, setLoggedOut] = React.useState(false); // New state to handle logout
+
+    const handleLogout = () => {
+        // Perform any logout logic here
+        // For now, just clear the authentication status in localStorage
+        localStorage.removeItem("authenticated");
+        setLoggedOut(true);
+        clearAuthenticatedAccount()
+        window.location.reload();
+    };
 
     return (
         <Box
@@ -85,7 +96,7 @@ const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<s
                     {/* Existing Items */}
                     <Item
                         title="Home"
-                        to="/"
+                        to="/Home"
                         icon={<HomeOutlined style={{color: selected === 'Home' ? 'black' : colors.white2[600]}}/>}
                         selected={selected}
                         setSelected={(title) => {
@@ -115,7 +126,7 @@ const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<s
                         }}
                     />*/}
                     <Item
-                        title="Deposit"
+                        title="Transfer"
                         to="/deposit"
                         icon={<PaymentsOutlinedIcon
                             style={{color: selected === 'Deposit' ? 'black' : colors.white2[600]}}/>}
@@ -153,10 +164,10 @@ const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<s
                 />
                 <Item
                     title="Logout"
-                    to="/logout"
-                    icon={<LogoutOutlinedIcon style={{color: selected === 'Logout' ? 'black' : colors.white2[600]}}/>}
+                    to="/"
+                    icon={<LogoutOutlinedIcon style={{ color: selected === 'Logout' ? 'black' : colors.white2[600] }} />}
                     selected={selected}
-                    setSelected={setSelected}
+                    setSelected={() => handleLogout()}
                 />
             </Box>
         </Box>

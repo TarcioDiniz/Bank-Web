@@ -16,6 +16,7 @@
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "apexcharts": "^3.44.0",
+    "axios": "^1.6.2",
     "jquery": "^3.7.1",
     "jquery-mask-plugin": "github:igorescobar/jQuery-Mask-Plugin",
     "react": "^18.2.0",

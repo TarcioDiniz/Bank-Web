@@ -5,11 +5,13 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 // Import ColorModeContext and tokens from your original code
 import {tokens} from "../../theme";
 import StringAvatar from "../../utilities/StringAvatar";
+import {getAuthenticatedAccount} from "../../data/globals";
 
 
 const Topbar: React.FC<{ selectedItem: string }> = ({ selectedItem }) => {
     const theme = useTheme() as Theme;
     const colors = tokens(theme.palette.mode);
+    const name = getAuthenticatedAccount()?.fullName
 
     return (
         <Box
@@ -41,7 +43,7 @@ const Topbar: React.FC<{ selectedItem: string }> = ({ selectedItem }) => {
                     </IconButton>
                 </Box>
                 <Box display="flex" alignItems="center" marginRight={2}>
-                    <Avatar {...StringAvatar('Tarcio Diniz')} />
+                    <Avatar {...StringAvatar(name)} />
                     <Typography
                         style={{
                             fontFamily: "'Source Sans 3', 'sans-serif'",
@@ -51,7 +53,7 @@ const Topbar: React.FC<{ selectedItem: string }> = ({ selectedItem }) => {
                         marginLeft={1}
                         color={colors.black[900]}
                     >
-                        Tarcio Diniz
+                        {name !== null ? name : 'Loading...'}
                     </Typography>
                 </Box>
             </Box>
