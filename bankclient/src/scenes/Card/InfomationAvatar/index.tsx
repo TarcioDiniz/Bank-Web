@@ -1,81 +1,48 @@
-import React, {useState} from 'react';
-import {Avatar, Box, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
+import React from 'react';
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-import RequestQuoteOutlinedIcon from '@mui/icons-material/RequestQuoteOutlined';
+import axios from 'axios';
+import {getAuthenticatedAccount} from "../../../data/globals";
 
 const InformationAvatar = () => {
-    const [openDialog1, setOpenDialog1] = useState(false);
-    const [openDialog2, setOpenDialog2] = useState(false);
 
-    const handleOpenDialog1 = () => {
-        setOpenDialog1(true);
-    };
+    const handleClick = async () => {
+        try {
+            // Substitua 'SEU_ENDPOINT' pelo seu endpoint real
+            const response = await axios.get('http://localhost:8080/api/transactions/statement/' + getAuthenticatedAccount()?.id, {
+                responseType: 'blob', // Indica que a resposta é um blob (binary data)
+            });
 
-    const handleCloseDialog1 = () => {
-        setOpenDialog1(false);
-    };
+            const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+            const pdfUrl = URL.createObjectURL(pdfBlob);
 
-    const handleOpenDialog2 = () => {
-        setOpenDialog2(true);
-    };
-
-    const handleCloseDialog2 = () => {
-        setOpenDialog2(false);
+            // Abre o PDF em uma nova guia do navegador
+            window.open(pdfUrl, '_blank');
+        } catch (error) {
+            console.error('Erro ao obter o PDF:', error);
+        }
     };
 
     return (
         <Box display="flex" flexDirection="row" justifyContent="center">
             {/* Botão 1 */}
-            <Button onClick={handleOpenDialog1}
-                    style={{
-                        marginTop: 0,
-                        marginRight: 50,
-                        margin: '8px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center'
-                    }}>
-                <Avatar sx={{width: 70, height: 70, background: "white"}}><DescriptionOutlinedIcon style={{ color: "black" }} sx={{width: 35, height: 35}}/></Avatar>
-                <Typography sx={{fontSize: "11px", color: "white"}} marginTop={1}>Request</Typography>
-                <Typography sx={{fontSize: "11px", color: "white"}}>Extract</Typography>
+            <Button
+                style={{
+                    marginTop: 0,
+                    marginRight: 50,
+                    margin: '8px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}
+                onClick={handleClick}
+            >
+                <Avatar sx={{ width: 70, height: 70, background: "white" }}>
+                    <DescriptionOutlinedIcon style={{ color: "black" }} sx={{ width: 35, height: 35 }} />
+                </Avatar>
+                <Typography sx={{ fontSize: "11px", color: "white" }} marginTop={1}>Request</Typography>
+                <Typography sx={{ fontSize: "11px", color: "white" }}>Extract</Typography>
             </Button>
-
-            {/* Botão 2 */}
-            <Button onClick={handleOpenDialog2}
-                    style={{
-                        marginTop: -20,
-                        margin: '8px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center'
-                    }}>
-                <Avatar sx={{width: 70, height: 70, background: "white"}}><RequestQuoteOutlinedIcon style={{ color: "black" }} sx={{width: 35, height: 35}}/></Avatar>
-                <Typography sx={{fontSize: "11px", color: "white"}} marginTop={1}>Charge</Typography>
-            </Button>
-
-            {/* Dialog 1 */}
-            <Dialog open={openDialog1} onClose={handleCloseDialog1}>
-                <DialogTitle>Dialog 1</DialogTitle>
-                <DialogContent>
-                    {/* Conteúdo do Dialog 1 */}
-                    <Typography>Conteúdo do Dialog 1</Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseDialog1}>Fechar</Button>
-                </DialogActions>
-            </Dialog>
-
-            {/* Dialog 2 */}
-            <Dialog open={openDialog2} onClose={handleCloseDialog2}>
-                <DialogTitle>Dialog 2</DialogTitle>
-                <DialogContent>
-                    {/* Conteúdo do Dialog 2 */}
-                    <Typography>Conteúdo do Dialog 2</Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseDialog2}>Fechar</Button>
-                </DialogActions>
-            </Dialog>
         </Box>
     );
 }

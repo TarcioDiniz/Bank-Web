@@ -17,6 +17,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import StringAvatar from "../../utilities/StringAvatar";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {IMaskInput} from 'react-imask';
+import {getAuthenticatedAccount} from "../../data/globals";
+import {useAlert} from "../Card/AlertContextProps";
 
 interface CustomProps {
     onChange: (event: { target: { name: string; value: string } }) => void;
@@ -30,14 +32,13 @@ const Settings: React.FC = () => {
     // Dados mockados
     const dadosMockados = {
         Avatar: "",
-        NomeCompleto: 'Tarcio Diniz',
-        CPF: "084.743.564-40",
-        sexo: "M",
-        agencia: '1234',
-        conta: '56789',
-        telefone: '83991931035',
-        _email: "teste@gmail.com",
-        senha: "undefined"
+        NomeCompleto: getAuthenticatedAccount()?.fullName,
+        CPF: getAuthenticatedAccount()?.cpf,
+        agencia: getAuthenticatedAccount()?.bankBranch,
+        conta: getAuthenticatedAccount()?.bankAccount,
+        telefone: String(getAuthenticatedAccount()?.phoneContact),
+        _email: String(getAuthenticatedAccount()?.email),
+        senha: String(getAuthenticatedAccount()?.password)
     };
 
     const [contato, setContato] = useState(dadosMockados.telefone);
@@ -46,7 +47,7 @@ const Settings: React.FC = () => {
     const [avatar, setAvatar] = useState(dadosMockados.Avatar);
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = React.useState(false);
-
+    const { showAlert } = useAlert();
 
     const TextMaskCustom = forwardRef(
         function TextMaskCustom(
@@ -84,8 +85,14 @@ const Settings: React.FC = () => {
     };
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        console.log('Informações do cliente foram atualizadas!');
+
+        // Crie um objeto com os dados que você deseja enviar para a API
+
+
+        // Chame a função para salvar as alterações na API
+        saveChangesToAPI();
     };
+
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -99,6 +106,36 @@ const Settings: React.FC = () => {
     ) => {
         setValue(e.target.value);
     };
+
+    const saveChangesToAPI = async () => {
+        const dataToUpdate = {
+            id: getAuthenticatedAccount()?.id,
+            contact: contato,
+            email: email,
+            password: senha
+        };
+
+        // Envie a requisição POST para a rota desejada
+        const response = await fetch('http://localhost:8080/V1/bank/account/updateInfo', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataToUpdate),
+        });
+
+        // Verifique se a resposta é bem-sucedida (status 200)
+        if (response.status === 200) {
+            // Limpe os dados do formulário
+
+            // Exiba um alerta de sucesso
+            showAlert('Pix key added successfully.', 'success');
+        } else {
+            // Se a resposta não for bem-sucedida, exiba um alerta de erro
+            showAlert('Erro ao realizar a transferência. Tente novamente mais tarde.', 'error');
+        }
+    };
+
 
 
     return (
@@ -131,7 +168,7 @@ const Settings: React.FC = () => {
                                 }}
                             >
 
-                                <Badge
+                                {/*<Badge
                                     overlap="circular"
                                     anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                                     badgeContent={
@@ -151,13 +188,13 @@ const Settings: React.FC = () => {
 
                                 </Badge>
 
-                                <input
+                                    <input
                                     accept="image/*"
                                     type="file"
                                     id="icon-button-file"
                                     style={{display: 'none'}}
-                                    onChange={handleFileChange}
-                                />
+                                onChange={handleFileChange}
+                            />*/}
 
 
                             </Box>
@@ -188,7 +225,7 @@ const Settings: React.FC = () => {
                                 sx={{marginBottom: 2}}
                             />
 
-                            <FormControl sx={{marginBottom: 2}} fullWidth required>
+                            {/*<FormControl sx={{marginBottom: 2}} fullWidth required>
                                 <InputLabel sx={{marginTop: 2}} id="sexo-label">Sex</InputLabel>
                                 <Select
                                     value={dadosMockados.sexo}
@@ -201,7 +238,7 @@ const Settings: React.FC = () => {
                                     <MenuItem value="M">Masculino</MenuItem>
                                     <MenuItem value="F">Feminino</MenuItem>
                                 </Select>
-                            </FormControl>
+                            </FormControl>*/}
 
 
                             <FormControl sx={{marginBottom: 2}} fullWidth required variant="filled">

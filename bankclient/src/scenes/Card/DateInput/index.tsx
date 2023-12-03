@@ -28,6 +28,7 @@ const DateInput: React.FC = () => {
             InputLabelProps={{
                 shrink: true,
             }}
+            disabled
         />
     );
 };

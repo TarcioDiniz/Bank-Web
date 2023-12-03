@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import Cards from "react-credit-cards-2";
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
+import {getAuthenticatedAccount} from "../../../data/globals";
 
 const PaymentForm = () => {
     const [state] = useState({
-        number: "5594 0980 4009 4562",
-        expiry: "06/2024",
-        cvc: "417",
-        name: "Tarcio Diniz",
+        number: "",
+        expiry: "/",
+        cvc: 123,
         focus: "",
     });
 
@@ -17,7 +17,7 @@ const PaymentForm = () => {
                 number={state.number}
                 expiry={state.expiry}
                 cvc={state.cvc}
-                name={state.name}
+                name={String(getAuthenticatedAccount()?.fullName)}
             />
         </>
     );

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Box,
     Button,
@@ -16,6 +16,7 @@ import {
 import {tokens} from '../../../theme';
 import {useAlert} from "../AlertContextProps";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {getAuthenticatedAccount} from "../../../data/globals";
 
 interface PixKeyProps {
     severity: 'error' | 'warning' | 'info' | 'success';
@@ -29,7 +30,7 @@ const PixKey: React.FC = () => {
     const {showAlert} = useAlert();
 
     // Use a more descriptive name for the state variable
-    const [pixKeys, setPixKeys] = useState<string[]>(['teste@email.com']);
+    const [pixKeys, setPixKeys] = useState<string[]>([]);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [newPixKey, setNewPixKey] = useState('');
     const [notification, setNotification] = useState<PixKeyProps | null>(null);
@@ -37,6 +38,33 @@ const PixKey: React.FC = () => {
     // Use arrow function syntax for consistency
     const openDialog = () => setIsDialogOpen(true);
     const closeDialog = () => setIsDialogOpen(false);
+
+    const getPixAcount = async () => {
+        try {
+            const accountId = getAuthenticatedAccount()?.id;
+            const response = await fetch(`http://localhost:8080/V1/bank/pix/${accountId}`);
+            if (response.ok) {
+                setPixKeys(await response.json())
+            } else {
+                console.error('Failed to fetch account balance. Status:', response.status);
+            }
+
+
+        } catch (error) {
+            console.error('Error during fetchAccountBalance:', error);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch initially
+        getPixAcount();
+
+        // Fetch every 1000 seconds
+        const intervalId = setInterval(getPixAcount, 1000000);
+
+        // Clean up the interval when the component is unmounted
+        return () => clearInterval(intervalId);
+    },);
 
 
     const isPixKeyDuplicate = (key: string): boolean => {
@@ -63,7 +91,7 @@ const PixKey: React.FC = () => {
         }
     };
 
-    const handleAddPixKey = () => {
+    const handleAddPixKey = async () => {
         if (!newPixKey.trim()) {
             showAlert('Pix key cannot be empty.', 'error');
             return;
@@ -72,8 +100,36 @@ const PixKey: React.FC = () => {
         if (pixKeys.length < 5) {
             if (!isPixKeyDuplicate(newPixKey)) {
                 setPixKeys([...pixKeys, newPixKey]);
-                showAlert('Pix key added successfully.', 'success');
-                closeDialog();
+
+                const pixData = {
+                    accountId: getAuthenticatedAccount()?.id, // Substitua pelo valor real
+                    pixKey: newPixKey,
+
+                };
+
+                // Envie a requisição POST para a rota desejada
+                const response = await fetch('http://localhost:8080/V1/bank/addPixKey', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(pixData),
+                });
+
+                // Verifique se a resposta é bem-sucedida (status 200)
+                if (response.status === 200) {
+                    // Limpe os dados do formulário
+                    setNewPixKey('');
+
+                    // Exiba um alerta de sucesso
+                    showAlert('Pix key added successfully.', 'success');
+                    closeDialog();
+                } else {
+                    // Se a resposta não for bem-sucedida, exiba um alerta de erro
+                    showAlert('Erro ao realizar a transferência. Tente novamente mais tarde.', 'error');
+                }
+
+
             } else {
                 showAlert('Duplicate Pix key. Please enter a unique key.', 'error');
             }
@@ -83,9 +139,35 @@ const PixKey: React.FC = () => {
     };
 
 
-    const handleDeletePixKey = (index: number) => {
+    const handleDeletePixKey = async (index: number) => {
         const deletedPixKey = pixKeys[index];
         const updatedPixKeys = pixKeys.filter((key, i) => i !== index);
+
+        const pixData = {
+            accountId: getAuthenticatedAccount()?.id, // Substitua pelo valor real
+            pixKey: deletedPixKey,
+
+        };
+
+        // Envie a requisição POST para a rota desejada
+        const response = await fetch('http://localhost:8080/V1/bank/deletePixKey', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(pixData),
+        });
+
+        // Verifique se a resposta é bem-sucedida (status 200)
+        if (response.status === 200) {
+
+            // Exiba um alerta de sucesso
+            showAlert(`Pix key "${deletedPixKey}" deleted successfully.`, 'success');
+        } else {
+            // Se a resposta não for bem-sucedida, exiba um alerta de erro
+            showAlert('Error performing the transfer. Try again later.', 'error');
+        }
+
         setPixKeys(updatedPixKeys);
         showAlert(`Pix key "${deletedPixKey}" deleted successfully.`, 'success');
     };
@@ -150,7 +232,7 @@ const PixKey: React.FC = () => {
                         backdropFilter: "blur(14.35px)",
                         position: "relative",
                     }} key={index}>
-                        <CardContent >
+                        <CardContent>
                             <Typography style={{color: colors.white1[700]}}>
                                 {getPixKeyType(pixKey)} <span
                                 style={{color: colors.white1[900], fontWeight: '800'}}>{pixKey}</span>

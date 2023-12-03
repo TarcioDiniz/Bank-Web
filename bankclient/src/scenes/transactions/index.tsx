@@ -9,11 +9,13 @@ import {transactions} from "../../data/mockData";
 import {tokens} from "../../theme";
 import {getAuthenticatedAccount} from "../../data/globals";
 import PixOutlinedIcon from '@mui/icons-material/PixOutlined';
+import LocalAtmOutlinedIcon from '@mui/icons-material/LocalAtmOutlined';
 
 const categoryIcons: { [key: string]: JSX.Element } = {
     'Cafe and Restaurant': <RestaurantIcon/>,
     'Groceries': <ShoppingBasketIcon/>,
-    'Pix': <PixOutlinedIcon sx={{color: "#18b6b6"}}/>
+    'Pix': <PixOutlinedIcon sx={{color: "#18b6b6"}}/>,
+    'Deposit': <LocalAtmOutlinedIcon/>
     // Add more categories and corresponding icons as needed
 };
 

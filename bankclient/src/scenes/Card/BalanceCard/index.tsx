@@ -21,6 +21,7 @@ const BalanceCard: React.FC = () => {
                 const data: AccountBalanceResponse = await response.json();
                 if (data.amount !== undefined) {
                     setBalance(data.amount);
+                    localStorage.setItem("data.amount", data.amount);
                 } else {
                     console.error('Invalid data received from the server:', data);
                 }

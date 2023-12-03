@@ -120,52 +120,55 @@ const QuickTransfer = () => {
 
     return (
         <Box>
-            {renderAvatars()}
-            <Box>
+            {/*{renderAvatars()}
+                <Box>
                 <Button onClick={handlePreviousPage} disabled={currentPage === 0}>
-                    Previous
-                </Button>
-                <Button sx={{color: "#f3df00"}} onClick={handleNextPage}>Next</Button>
-            </Box>
-            <React.Fragment>
-                <Dialog open={isAddAvatarDialogOpen} onClose={handleCloseAddAvatarDialog}>
-                    <DialogTitle>Add New Quick Transfer</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            To create a Quick Transfer, add the name and pix key.
-                        </DialogContentText>
+            Previous
+        </Button>
+    <Button sx={{color: "#f3df00"}} onClick={handleNextPage}>Next</Button>
+</Box>
+    <React.Fragment>
+        <Dialog open={isAddAvatarDialogOpen} onClose={handleCloseAddAvatarDialog}>
+            <DialogTitle>Add New Quick Transfer</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    To create a Quick Transfer, add the name and pix key.
+                </DialogContentText>
 
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Nome"
-                            value={newAvatarName}
-                            fullWidth
-                            variant="standard"
-                            onChange={(e) => setNewAvatarName(e.target.value)}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Chave PIX"
-                            value={newPixKey}
-                            fullWidth
-                            variant="standard"
-                            onChange={(e) => setNewPixKey(e.target.value)}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button variant="contained" onClick={handleCloseAddAvatarDialog}>
-                            Cancel
-                        </Button>
-                        <Button variant="contained" onClick={handleAddAvatar}>
-                            Create
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </React.Fragment>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Nome"
+                    value={newAvatarName}
+                    fullWidth
+                    variant="standard"
+                    onChange={(e) => setNewAvatarName(e.target.value)}
+                />
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Chave PIX"
+                    value={newPixKey}
+                    fullWidth
+                    variant="standard"
+                    onChange={(e) => setNewPixKey(e.target.value)}
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button variant="contained" onClick={handleCloseAddAvatarDialog}>
+                    Cancel
+                </Button>
+                <Button variant="contained" onClick={handleAddAvatar}>
+                    Create
+                </Button>
+            </DialogActions>
+        </Dialog>
+    </React.Fragment>
+*/} <Typography>
+            ⚠️⚠️ Under development! ⚠️⚠️
+*</Typography>
         </Box>
     );
 };

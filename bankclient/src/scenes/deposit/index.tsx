@@ -19,6 +19,7 @@ import MoneyInput from '../Card/MoneyInput';
 import {tokens} from "../../theme";
 import DateInput from "../Card/DateInput";
 import BalanceCard from "../Card/BalanceCard";
+import {getAuthenticatedAccount} from "../../data/globals";
 
 interface Bank {
     identifier: string;
@@ -27,7 +28,7 @@ interface Bank {
 
 const banks: Bank[] = [
     {
-        identifier: 'Banco A - 1234',
+        identifier: 'Banco Plutus - 2979',
         name: 'Banco A',
     },
     {
@@ -37,7 +38,7 @@ const banks: Bank[] = [
     // Add other banks as needed
 ];
 
-const initialBalance = 1000;
+const initialBalance = Number(localStorage.getItem("data.amount"));
 
 const Deposit: React.FC = () => {
     const theme = useTheme();
@@ -50,21 +51,46 @@ const Deposit: React.FC = () => {
     const [value, setValue] = useState<string>(''); // Changed to string for MoneyInput
     const [userBalance, setUserBalance] = useState<number>(initialBalance);
 
-    const handleDeposit = () => {
-        if (!bank || !account || !value) {
-            showAlert('Todos os campos, exceto a descrição, são obrigatórios.', 'error');
-            return;
-        }
+    const handleDeposit = async () => {
+
+
 
         const depositValue = Number(value);
-        if (depositValue > userBalance) {
-            showAlert('Saldo insuficiente para realizar o depósito.', 'error');
-            return;
+
+
+        const pixData = {
+            accountId: getAuthenticatedAccount()?.id, // Substitua pelo valor real
+            description: description,
+            amount: value
+
+        };
+
+        // Envie a requisição POST para a rota desejada
+        const response = await fetch('http://localhost:8080/V1/bank/addDeposit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(pixData),
+        });
+
+        // Verifique se a resposta é bem-sucedida (status 200)
+        if (response.status === 200) {
+            // Limpe os dados do formulário
+            setValue('');
+            setDescription("");
+
+            // Exiba um alerta de sucesso
+            showAlert('Deposit made successfully!', 'success');
+
+        } else {
+            // Se a resposta não for bem-sucedida, exiba um alerta de erro
+            showAlert('Error when making the deposit. Try again later.', 'error');
         }
 
         // Implement the logic for processing the deposit using the bank and other details
 
-        showAlert('Depósito realizado com sucesso!', 'success');
+
     };
 
 
@@ -87,11 +113,11 @@ const Deposit: React.FC = () => {
                 </Card>
                 <Card sx={{height: 500, backgroundColor: colors.blue[300]}}>
                     <CardContent>
-                        <Typography marginBottom={2} color={colors.black[700]} fontWeight="bold" variant="h4">Transfer</Typography>
-                        <FormControl sx={{marginBottom: 2}} fullWidth>
+                        <Typography marginBottom={2} color={colors.black[700]} fontWeight="bold" variant="h4">Deposit</Typography>
+                        <FormControl disabled sx={{marginBottom: 2}} fullWidth>
                             <InputLabel>Banco</InputLabel>
                             <Select
-                                value={bank}
+                                value={"Banco Plutus - 2979"}
                                 onChange={(e) => setBank(e.target.value as string)}
                             >
                                 {banks.map((bank) => (
@@ -106,8 +132,9 @@ const Deposit: React.FC = () => {
                             sx={{marginBottom: 2}}
                             label="Conta"
                             fullWidth
-                            value={account}
+                            value={getAuthenticatedAccount()?.bankAccount}
                             onChange={(e) => setAccount(e.target.value)}
+                            disabled
                         />
 
                         <Box sx={{marginBottom: 2}}><DateInput /></Box>

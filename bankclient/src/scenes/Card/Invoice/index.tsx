@@ -1,22 +1,24 @@
 import React from 'react';
 import { Box, Button, CardContent, Typography, useTheme } from '@mui/material';
 import { tokens } from "../../../theme";
+import {useAlert} from "../AlertContextProps";
 
 const Invoice = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const {showAlert} = useAlert();
 
     // Replace with your actual values
-    const availableLimit = 1000;
-    const currentInvoice = 500;
-    const upcomingInvoicesLimit = availableLimit - currentInvoice;
-    const currentInvoiceClosingDate = '07 DEC'; // Replace with your actual date
+    const availableLimit = "***";
+    const currentInvoice = "***";
+    const upcomingInvoicesLimit = "***";
+    const currentInvoiceClosingDate = '** ***'; // Replace with your actual date
 
     const fontSizeDescription = "15px";
 
     const handlePayInvoice = () => {
         // Logic to pay the invoice
-        console.log('Invoice paid!');
+        showAlert('Error, this function is not available to you.', 'error');
     };
 
     return (
@@ -31,7 +33,7 @@ const Invoice = () => {
                     color: `${colors.black[400]}`,
                     fontWeight: "bold"
                 }}>
-                    $ {availableLimit.toFixed(2)}
+                    R$ {availableLimit}
                 </Typography>
                 <Typography marginBottom={1} fontSize={fontSizeDescription} style={{
                     color: `${colors.black[300]}`,
@@ -42,7 +44,7 @@ const Invoice = () => {
                     color: "black",
                     fontWeight: "bold"
                 }}>
-                    $ {currentInvoice.toFixed(2)}
+                    R$ {currentInvoice}
                 </Typography>
                 <Typography marginBottom={1} fontSize={fontSizeDescription} style={{
                     color: `${colors.black[300]}`,
@@ -53,7 +55,7 @@ const Invoice = () => {
                     color: `${colors.black[400]}`,
                     fontWeight: "bold"
                 }}>
-                    $ {upcomingInvoicesLimit.toFixed(2)}
+                    R$ {upcomingInvoicesLimit}
                 </Typography>
                 <Typography marginBottom={1} fontSize={fontSizeDescription} style={{
                     color: `${colors.black[300]}`,

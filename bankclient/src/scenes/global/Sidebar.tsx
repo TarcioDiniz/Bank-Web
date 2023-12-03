@@ -126,7 +126,7 @@ const Sidebar: React.FC<{ setSelectedItem: React.Dispatch<React.SetStateAction<s
                         }}
                     />*/}
                     <Item
-                        title="Transfer"
+                        title="Deposit"
                         to="/deposit"
                         icon={<PaymentsOutlinedIcon
                             style={{color: selected === 'Deposit' ? 'black' : colors.white2[600]}}/>}
